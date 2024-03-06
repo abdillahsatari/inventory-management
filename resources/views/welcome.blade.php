@@ -5,21 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Inventory Management">
         <meta name="author" content="Abdillah Satari Rahim">
-        <title>Inventory Management</title>
-    
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Inventory Management">
         <meta name="keywords" content="Web Developeer &amp; Software Engineer">
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
         <meta name="author" content="Abdillah Satari Rahim">
-    
+        
         <link rel="canonical" href="#">
         <link rel="icon" href="icon.ico" type="image/x-icon">
         <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
     
-        <title>Inventory Management</title>
-    
+        <title>{{ config('app.name', 'Inventory Management') }}</title>
     
         <meta property="og:title" content="Inventory Management">
         <meta property="og:description" content="Web Developer &amp; Software Engineer">
