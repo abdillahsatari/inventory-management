@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminCustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,16 @@ Route::prefix('admin')->group(function () {
         Route::get('/product/{id}/edit', 'edit')->name('admin.product.edit');
         Route::put('/product/{id}/update', 'update')->name('admin.product.update');
         Route::delete('/product/{id}/destroy', 'destroy')->name('admin.product.destroy');
+    });
+
+    Route::controller(AdminCustomerController::class)->group(function () {
+        Route::get('/customers', 'index')->name('admin.customer.index');
+        Route::get('/customer/{id}', 'show')->name('admin.customer.show');
+        Route::get('/customer/create', 'create')->name('admin.customer.create');
+        Route::post('/customer/store', 'store')->name('admin.customer.store');
+        Route::get('/customer/{id}/edit', 'edit')->name('admin.customer.edit');
+        Route::put('/customer/{id}/update', 'update')->name('admin.customer.update');
+        Route::delete('/customer/{id}/destroy', 'destroy')->name('admin.customer.destroy');
     });
 
     // later on

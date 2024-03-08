@@ -307,9 +307,9 @@ $(document).ready(function() {
 						Page Function
 	=================================================================*/
 
-  	/**
+  /**
 	 *
-	 * Admin Course Categories Page
+	 * Admin Product Page
 	 *
 	 **/
 	var _createProductModals = $('#createProductModals');
@@ -322,26 +322,18 @@ $(document).ready(function() {
 	}
 
   // later on
-	var _editCourseCategoriesModal = $('#editCourseCategoriModal');
-	if (_editCourseCategoriesModal.length > 0) {
-		_editCourseCategoriesModal.on('shown.bs.modal', function (e) {
+	var _editProductModal = $('#editProductModal');
+	if (_editProductModal.length > 0) {
+		_editProductModal.on('shown.bs.modal', function (e) {
 			var _this						= $(this);
-			var _dataUrl 					= _this.data('url');
-			var _dataCourseCategoryId		= $(e.relatedTarget).data('id');
-			var _formEditCourseCategory 	= _this.find('.js-form_course_category');
-			var formData 					= new FormData();
-			formData.set('dataCourseCategoryId', _dataCourseCategoryId);
-			formData.set('_token', _formEditCourseCategory._getCsrfToken());
+			var _dataUrl 				= _this.data('url');
+			var _dataProductId  = $(e.relatedTarget).data('id');
+			var _formEditProduct= _this.find('.js-form_edit_product');
+			var formData  = new FormData();
+			formData.set('dataProductId', _dataProductId);
+			formData.set('_token', _formEditProduct._getCsrfToken());
 
-			_this.find('input[name="course_category_id"]').val(_dataCourseCategoryId);
-
-			$(".modal-select").select2({
-				theme: "bootstrap4",
-				width: $(this).data("width") ? $(this).data("width") : $(this).hasClass("w-100") ? "100%" : "style",
-				placeholder: $(this).data("placeholder"),
-				allowClear: Boolean($(this).data("allow-clear")),
-				dropdownParent: _editCourseCategoriesModal,
-			});
+			_this.find('input[name="productId"]').val(_dataProductId);
 
 			$.ajax({
 				url: _dataUrl,
@@ -353,20 +345,78 @@ $(document).ready(function() {
 				var obj = $.parseJSON(result);
 
 				if (obj.status == 'success') {
-					_this.find('input[name="course_category_headline"]').val(obj.data["course_category_headline"]);
-					$(".modal-select").select2('val', obj.data["course_category_status"]);
+					_this.find('input[name="product_name"]').val(obj.data["name"]);
+					_this.find('input[name="product_price"]').val(obj.data["price"]);
+					_this.find('input[name="product_point"]').val(obj.data["point"]);
 				}
 
-				_formEditCourseCategory._getCsrfToken(obj.csrf_token);
+				_formEditProduct._getCsrfToken(obj.csrf_token);
 
 			}).fail(function (error, abc, dfg) {
 				console.log("error msg : ", error);
 			});
 
-			validateForm(_formEditCourseCategory);
+			validateForm(_formEditProduct);
 		});
 
-		_editCourseCategoriesModal.modalClose();
+		_editProductModal.modalClose();
+	}
+
+  /**
+	 *
+	 * Admin Customer Page
+	 *
+	 **/
+	var _createCustomerModals = $('#createCustomerModals');
+	if (_createCustomerModals.length > 0){
+		_createCustomerModals.on('shown.bs.modal', function (e) {
+
+      console.log("hello world");
+			validateForm(_createCustomerModals.find('.js-form_customer_create'));
+		});
+
+		_createCustomerModals.modalClose();
+	}
+
+  // later on
+	var _editProductModal = $('#editProductModal');
+	if (_editProductModal.length > 0) {
+		_editProductModal.on('shown.bs.modal', function (e) {
+			var _this						= $(this);
+			var _dataUrl 				= _this.data('url');
+			var _dataProductId  = $(e.relatedTarget).data('id');
+			var _formEditProduct= _this.find('.js-form_edit_product');
+			var formData  = new FormData();
+			formData.set('dataProductId', _dataProductId);
+			formData.set('_token', _formEditProduct._getCsrfToken());
+
+			_this.find('input[name="productId"]').val(_dataProductId);
+
+			$.ajax({
+				url: _dataUrl,
+				data: formData,
+				type: "post",
+				processData: false,
+				contentType: false
+			}).done(function(result) {
+				var obj = $.parseJSON(result);
+
+				if (obj.status == 'success') {
+					_this.find('input[name="product_name"]').val(obj.data["name"]);
+					_this.find('input[name="product_price"]').val(obj.data["price"]);
+					_this.find('input[name="product_point"]').val(obj.data["point"]);
+				}
+
+				_formEditProduct._getCsrfToken(obj.csrf_token);
+
+			}).fail(function (error, abc, dfg) {
+				console.log("error msg : ", error);
+			});
+
+			validateForm(_formEditProduct);
+		});
+
+		_editProductModal.modalClose();
 	}
 
 })(jQuery);

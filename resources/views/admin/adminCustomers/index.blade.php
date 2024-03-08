@@ -1,13 +1,13 @@
 @extends('admin.adminLayouts.app')
 
 @section('title')
-    <title>Admin Products</title>
+    <title>Admin Pelanggan</title>
 @endsection
 
 @section('content')
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Produk</div>
+        <div class="breadcrumb-title pe-3">Pelanggan</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
@@ -19,37 +19,37 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createProductModals">Tambah Produk</button>
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createCustomerModals">Tambah Pelanggan</button>
             </div>
         </div>
     </div>
     <!--end breadcrumb-->
-    <h6 class="mb-0 text-uppercase">List Produk</h6>
+    <h6 class="mb-0 text-uppercase">List Pelanggan</h6>
     <hr />
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="example2" class="table table-striped table-bordered productsTable">
+                <table id="example2" class="table table-striped table-bordered customersTable">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Produk</th>
-                            <th>Harga Produk</th>
-                            <th>Point Produk</th>
+                            <th>Nama Pelanggan</th>
+                            <th>No. Hp Pelanggan</th>
+                            <th>Alamat Pelanggan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php($no=1)
-                        @foreach ($c_productList as $product)
+                        @foreach ($c_customerList as $customer)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$product->name}}</td>
-                            <td>{{$product->price}}</td>
-                            <td>{{$product->point}}</td>
+                            <td>{{$customer->name}}</td>
+                            <td>{{$customer->phone_number}}</td>
+                            <td>{{$customer->address ?: "-"}}</td>
                             <td>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deleteProduct">Delete</a>
+                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editcustomer">Edit</a>
+                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deletecustomer">Delete</a>
                             </td>
                         </tr>
                         @endforeach

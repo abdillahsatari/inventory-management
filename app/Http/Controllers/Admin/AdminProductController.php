@@ -6,8 +6,6 @@ use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-// use Illuminate\Contracts\View\View;
-// use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
@@ -24,11 +22,11 @@ class AdminProductController extends Controller
     public function index(Request $request): view
     {
         $c_productList = Product::all();
-        $c_pageInfo = collect([
+        $c_pageTemplate = collect([
             "hasmodal" => true,
             "modals" => "templates.admin.modals.productModals"
         ]);
-        return view('admin.adminProducts.index', compact('c_productList', 'c_pageInfo'));
+        return view('admin.adminProducts.index', compact('c_productList', 'c_pageTemplate'));
     }
 
     /**

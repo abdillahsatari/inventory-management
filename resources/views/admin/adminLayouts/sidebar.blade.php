@@ -34,7 +34,7 @@
             </a>
         </li>
         <li>
-            <a href="javascript:;">
+            <a href="{{ route('admin.customer.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Pelanggan</div>
