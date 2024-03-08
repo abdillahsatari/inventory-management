@@ -8,9 +8,8 @@
 </p>
 
 ## What's in this repo
--  Application Homepage
--  Application Member
 -  Application Admin
+-  Application Cashier
 
 ### System Requirements
 -  Laravel 9
