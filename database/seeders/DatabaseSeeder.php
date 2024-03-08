@@ -27,5 +27,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@inventory.com',
             'password' => bcrypt('admin')
         ]);
+
+        $this->call(ProductSeeder::class);
     }
 }
