@@ -48,8 +48,18 @@
                             <td>{{$product->price}}</td>
                             <td>{{$product->point}}</td>
                             <td>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deleteProduct">Delete</a>
+                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProductModals"
+                                    data-id="{{ $product->id }}"
+                                    data-url="{{ route("admin.ajax.product.edit", ['id' => $product->id]) }}"
+                                    data-post-url= "{{ route('admin.product.update', ['id' => $product->id]) }}">
+									<i class="fadeIn animated bx bx-message-square-edit"></i>
+								</button> --}}
+                                <a href="{{ route("admin.product.edit", ['id' => $product->id]) }}" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm">
+                                    <i class="fadeIn animated bx bx-message-square-edit"></i>
+                                </a>
+                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $product->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deleteProduct">
+                                    <i class="fadeIn animated bx bx-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach

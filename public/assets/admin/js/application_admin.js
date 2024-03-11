@@ -241,7 +241,7 @@ $(document).ready(function() {
 		});
 
 		$form.find('.js-form_action_btn').on('click', function (event) {
-			event.preventDefault();
+			// event.preventDefault();
 			var _this = $(this);
 
 			var _imageUpload = $form.find('.js-image_upload');
@@ -321,36 +321,30 @@ $(document).ready(function() {
 		_createProductModals.modalClose();
 	}
 
-  // later on
-	var _editProductModal = $('#editProductModal');
+	var _editProductModal = $('#editProductModals');
 	if (_editProductModal.length > 0) {
 		_editProductModal.on('shown.bs.modal', function (e) {
-			var _this						= $(this);
-			var _dataUrl 				= _this.data('url');
-			var _dataProductId  = $(e.relatedTarget).data('id');
-			var _formEditProduct= _this.find('.js-form_edit_product');
-			var formData  = new FormData();
-			formData.set('dataProductId', _dataProductId);
-			formData.set('_token', _formEditProduct._getCsrfToken());
+			var _this     = $(this);
+			var _dataId   = $(e.relatedTarget).data('id');
+			var _dataUrl  = $(e.relatedTarget).data('url');
+			var _dataPostUrl  = $(e.relatedTarget).data('post-url');
+			var _formEditProduct= _this.find('.js-form_product_edit');
 
-			_this.find('input[name="productId"]').val(_dataProductId);
+			_this.find('input[name="productId"]').val(_dataId);
+      _formEditProduct.attr("action", _dataPostUrl);
 
 			$.ajax({
+				type: "GET",
 				url: _dataUrl,
-				data: formData,
-				type: "post",
-				processData: false,
-				contentType: false
+        contentType: false,
+        processData: false,
 			}).done(function(result) {
-				var obj = $.parseJSON(result);
 
-				if (obj.status == 'success') {
-					_this.find('input[name="product_name"]').val(obj.data["name"]);
-					_this.find('input[name="product_price"]').val(obj.data["price"]);
-					_this.find('input[name="product_point"]').val(obj.data["point"]);
-				}
-
-				_formEditProduct._getCsrfToken(obj.csrf_token);
+        if(result.success){
+          _this.find('input[name="product_name"]').val(result.data.name);
+          _this.find('input[name="product_price"]').val(result.data.price);
+          _this.find('input[name="product_point"]').val(result.data.point);
+        }
 
 			}).fail(function (error, abc, dfg) {
 				console.log("error msg : ", error);

@@ -73,9 +73,13 @@ class AdminProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $id)
     {
-        //
+        $c_product = $id;
+        $c_pageTemplate = collect([
+            "hasmodal" => false
+        ]);
+        return view('admin.adminProducts.edit', compact('c_product', 'c_pageTemplate'));
     }
 
     /**
@@ -85,9 +89,15 @@ class AdminProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id )
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->name = $request->input('product_name');
+        $product->price = $request->input('product_price');
+        $product->point = $request->input('product_point');
+        $product->update();
+
+        return redirect(route('admin.product.edit', $product->id))->with(['success' => 'Course Diperbaharui!']);
     }
 
     /**
@@ -126,5 +136,14 @@ class AdminProductController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
+    }
+
+    public function editProduct($id)
+    {
+        $showProduct = Product::findOrFail($id);
+        if ($showProduct) {
+            return response()->json(['success' => true, 'data' => $showProduct]);
+        }
+        return response()->json(['success' => false, 'message' => 'No post found']);
     }
 }

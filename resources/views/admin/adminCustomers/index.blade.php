@@ -48,8 +48,12 @@
                             <td>{{$customer->phone_number}}</td>
                             <td>{{$customer->address ?: "-"}}</td>
                             <td>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editcustomer">Edit</a>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deletecustomer">Delete</a>
+                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editcustomer">
+                                    <i class="fadeIn animated bx bx-message-square-edit"></i>
+                                </a>
+                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deletecustomer">
+                                    <i class="fadeIn animated bx bx-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach
