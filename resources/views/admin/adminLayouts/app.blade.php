@@ -91,8 +91,8 @@
     <!--end switcher-->
 
     <!-- templates -->
-    @if ($c_pageTemplate['hasmodal'])
-    @include($c_pageTemplate['modals'])
+    @if ($pageTemplate['hasmodal'])
+    @include($pageTemplate['modals'])
     @endif
 
     <!-- Scripts -->

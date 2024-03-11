@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminInventoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,14 +20,14 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::controller(AdminProductController::class)->group(function () {
-        Route::get('/products', 'index')->name('admin.product.index');
-        Route::get('/product/{id}', 'show')->name('admin.product.show');
-        Route::get('/product/create', 'create')->name('admin.product.create');
-        Route::post('/product/store', 'store')->name('admin.product.store');
-        Route::get('/product/{id}/edit', 'edit')->name('admin.product.edit');
-        Route::post('/product/{id}/update', 'update')->name('admin.product.update');
-        Route::delete('/product/{id}/destroy', 'destroy')->name('admin.product.destroy');
+    Route::controller(AdminInventoryController::class)->group(function() {
+        Route::get('/inventories', 'index')->name('admin.inventory.index');
+        Route::get('/inventory/{id}', 'show')->name('admin.inventory.show');
+        Route::get('/inventory/create', 'create')->name('admin.inventory.create');
+        Route::post('/inventory/store', 'store')->name('admin.inventory.store');
+        Route::get('/inventory/{id}/edit', 'edit')->name('admin.inventory.edit');
+        Route::post('/inventory/{id}/update', 'update')->name('admin.inventory.update');
+        Route::get('/inventory/{id}/destroy', 'destroy')->name('admin.inventory.destroy');
     });
 
     Route::controller(AdminCustomerController::class)->group(function () {
@@ -44,7 +44,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('ajax')->group(function () {
         // Route::get('/products', 'Admin\AdminProductController@getProducts')->name('admin.ajax.getProducts');
         // Route::get('/product/{id}/edit', 'Admin\AdminProductController@editProduct')->name('admin.ajax.editProducts');
-        Route::get('/product/{id}/edit', [AdminProductController::class, 'editProduct'])->name('admin.ajax.product.edit');
+
+        // Route::get('/product/{id}/edit', [AdminProductController::class, 'editProduct'])->name('admin.ajax.product.edit');
 
         // another ajax route here
 

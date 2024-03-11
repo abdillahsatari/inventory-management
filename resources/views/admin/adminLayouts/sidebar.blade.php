@@ -20,17 +20,10 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.product.index') }}">
+            <a href="{{ route('admin.inventory.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
-                <div class="menu-title">Produk</div>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Inventori</div>
+                <div class="menu-title">Inventory</div>
             </a>
         </li>
         <li>
