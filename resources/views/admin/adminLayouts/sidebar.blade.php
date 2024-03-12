@@ -13,7 +13,7 @@
     <ul class="metismenu" id="menu">
         <li class="menu-label">MAIN MENU</li>
         <li>
-            <a href="javascript:;">
+            <a href="{{ route('admin.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Dashboard</div>

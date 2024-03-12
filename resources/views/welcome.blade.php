@@ -5,20 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Inventory Management">
         <meta name="author" content="Abdillah Satari Rahim">
-        
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Inventory Management">
         <meta name="keywords" content="Web Developeer &amp; Software Engineer">
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
         <meta name="author" content="Abdillah Satari Rahim">
-        
+
         <link rel="canonical" href="#">
         <link rel="icon" href="icon.ico" type="image/x-icon">
         <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-    
+
         <title>{{ config('app.name', 'Inventory Management') }}</title>
-    
+
         <meta property="og:title" content="Inventory Management">
         <meta property="og:description" content="Web Developer &amp; Software Engineer">
         <meta property="og:url" content="#">
@@ -27,12 +27,12 @@
         <meta property="og:site_name" content="Inventory Management"> <!-- Nama situs web -->
         <meta property="og:image" content="assets/profile.png"> <!-- URL gambar representatif situs -->
         <meta property="og:image:alt" content="logo.png">
-    
+
         <meta name="twitter:title" content="Abdillah Satari Rahim">
         <meta name="twitter:description" content="Web Developer &amp; Software Engineer">
         <meta name="twitter:card" content="summary_large_image">
-    
-    
+
+
         <!-- Custom Google font-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -57,7 +57,7 @@
                                 <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">Let's Get Started</span></h1>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
                                     <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder"
-                                        href="#">
+                                        href="{{ route('admin.index') }}">
                                         Admin
                                     </a>
                                     <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder"
@@ -206,7 +206,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script>
-            var date = new Date();            
+            var date = new Date();
             document.getElementById('date').innerHTML  = "Copyright &copy " + date.getFullYear();
         </script>
     </body>

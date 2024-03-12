@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminInventoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.index');
+
     Route::controller(AdminInventoryController::class)->group(function() {
         Route::get('/inventories', 'index')->name('admin.inventory.index');
         Route::get('/inventory/{id}', 'show')->name('admin.inventory.show');
