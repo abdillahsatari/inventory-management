@@ -69,13 +69,13 @@ class AdminInventoryController extends Controller
      * @param  \App\Models\Inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inventory $inventory, $id)
+    public function edit($id)
     {
         $inventory = Inventory::findOrFail($id);
         $pageTemplate = collect([
             "hasmodal" => false,
         ]);
-        return view('admin.adminInventories.edit', compact('inventory', 'pageTemplate'));
+        return view('admin.adminInventories.form', compact('inventory', 'pageTemplate'));
     }
 
     /**
@@ -108,6 +108,6 @@ class AdminInventoryController extends Controller
     {
         $inventory = Inventory::findOrFail($id);
         $inventory->delete();
-        return redirect()->route('admin.inventory.index')->with('success','Inventory has been deleted successfully');
+        return redirect()->route('admin.inventory.index')->with('success','Inventori Berhasil dihapus');
     }
 }

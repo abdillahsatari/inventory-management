@@ -56,7 +56,7 @@
                                     data-post-url= "{{ route('admin.product.update', ['id' => $product->id]) }}">
 									<i class="fadeIn animated bx bx-message-square-edit"></i>
 								</button> --}}
-                                <a href="{{ route("admin.inventory.edit", ['id' => $inventory->id]) }}" data-toggle="tooltip"  data-id="'{{ $inventory->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm">
+                                <a href="{{ route("admin.inventory.edit", ['id' => $inventory->id]) }}" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-primary btn-sm">
                                     <i class="fadeIn animated bx bx-message-square-edit"></i>
                                 </a>
                                 <a href="{{ route("admin.inventory.destroy", ['id' => $inventory->id]) }}" data-original-title="Delete" class="edit btn btn-danger btn-sm">

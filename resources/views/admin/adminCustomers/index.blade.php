@@ -35,7 +35,7 @@
                             <th>No.</th>
                             <th>Nama Pelanggan</th>
                             <th>No. Hp Pelanggan</th>
-                            <th>Alamat Pelanggan</th>
+                            <th style="width: 40%">Alamat Pelanggan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -48,10 +48,10 @@
                             <td>{{$customer->phone_number}}</td>
                             <td>{{$customer->address ?: "-"}}</td>
                             <td>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Edit" class="edit btn btn-primary btn-sm editcustomer">
+                                <a href="{{ route("admin.customer.edit", ['id' => $customer->id]) }}" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-primary btn-sm">
                                     <i class="fadeIn animated bx bx-message-square-edit"></i>
                                 </a>
-                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'{{ $customer->id }}'" data-original-title="Delete" class="edit btn btn-danger btn-sm deletecustomer">
+                                <a href="{{ route("admin.customer.destroy", ['id' => $customer->id]) }}" data-original-title="Delete" class="edit btn btn-danger btn-sm">
                                     <i class="fadeIn animated bx bx-trash-alt"></i>
                                 </a>
                             </td>

@@ -36,8 +36,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/customer/create', 'create')->name('admin.customer.create');
         Route::post('/customer/store', 'store')->name('admin.customer.store');
         Route::get('/customer/{id}/edit', 'edit')->name('admin.customer.edit');
-        Route::put('/customer/{id}/update', 'update')->name('admin.customer.update');
-        Route::delete('/customer/{id}/destroy', 'destroy')->name('admin.customer.destroy');
+        Route::post('/customer/{id}/update', 'update')->name('admin.customer.update');
+        Route::get('/customer/{id}/destroy', 'destroy')->name('admin.customer.destroy');
     });
 
     // later on

@@ -18,11 +18,11 @@ class AdminCustomerController extends Controller
     public function index(): View
     {
         $c_customerList = Customer::all();
-        $c_pageTemplate = collect([
+        $pageTemplate = collect([
             "hasmodal" => true,
             "modals" => "templates.admin.modals.customerModals"
         ]);
-        return view('admin.adminCustomers.index', compact('c_customerList', 'c_pageTemplate'));
+        return view('admin.adminCustomers.index', compact('c_customerList', 'pageTemplate'));
     }
 
     /**
@@ -44,9 +44,9 @@ class AdminCustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $customer = new Customer();
-        $customer->name = $request->input('customer_name');
-        $customer->phone_number = $request->input('customer_phone_number');
-        $customer->address = $request->input('customer_address');
+        $customer->name = $request->customer_name;
+        $customer->phone_number = $request->customer_phone_number;
+        $customer->address = $request->customer_address;
         $customer->save();
 
         return redirect()->route('admin.customer.index');
@@ -69,9 +69,13 @@ class AdminCustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $pageTemplate = collect([
+            "hasmodal" => false,
+        ]);
+        return view('admin.adminCustomers.form', compact('customer', 'pageTemplate'));
     }
 
     /**
@@ -81,9 +85,15 @@ class AdminCustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer)
+    public function update(UpdateCustomerRequest $request, $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->name = $request->customer_name;
+        $customer->phone_number = $request->customer_phone_number;
+        $customer->address = $request->customer_address;
+        $customer->update();
+
+        return redirect()->route('admin.customer.edit', ["id" => $customer->id ])->with("Pelanggan Berhasil diupdate");
     }
 
     /**
@@ -92,8 +102,10 @@ class AdminCustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return redirect()->route('admin.customer.index')->with('success','Pelanggan Berhasil dihapus');
     }
 }
