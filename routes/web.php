@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminInventoryController;
+use App\Http\Controllers\Cashier\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,3 +56,7 @@ Route::prefix('admin')->group(function () {
     }); //add middleware only.ajax here
 
 }); //add middleware admi.only here
+
+Route::prefix('kasir')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('cashier.index');
+});
