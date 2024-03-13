@@ -12,11 +12,12 @@
     <!--navigation-->
     <ul class="metismenu" id="menu">
         <li class="menu-label">MAIN MENU</li>
+        @can('isAdmin')
         <li>
             <a href="{{ route('admin.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
-                <div class="menu-title">Dashboard</div>
+                <div class="menu-title">Dashboard Admin</div>
             </a>
         </li>
         <li>
@@ -26,6 +27,15 @@
                 <div class="menu-title">Inventory</div>
             </a>
         </li>
+        @elsecan('isCashier')
+        <li>
+            <a href="{{ route('cashier.index') }}">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Dashboard</div>
+            </a>
+        </li>
+        @endcan
         <li>
             <a href="{{ route('admin.customer.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
@@ -38,6 +48,13 @@
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Transaksi</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Report Penjualan</div>
             </a>
         </li>
     </ul>

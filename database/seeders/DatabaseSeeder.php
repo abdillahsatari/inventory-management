@@ -6,8 +6,12 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Inventory;
+use App\Models\Role;
 use App\Models\User;
+use Database\Seeders\CustomerSeeder;
+use Database\Seeders\InventorySeeder;
 use Illuminate\Database\Seeder;
+// use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,13 +29,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@inventory.com',
-            'password' => bcrypt('admin')
-        ]);
+        // $this->call(InventorySeeder::class);
+        // $this->call(CustomerSeeder::class);
 
-        $this->call(InventorySeeder::class);
-        $this->call(CustomerSeeder::class);
+        $this->call([
+            InventorySeeder::class,
+            CustomerSeeder::class,
+            RoleSeeder::class,
+            UserWithRoleSeeder::class
+        ]);
     }
 }

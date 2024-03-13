@@ -339,8 +339,14 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
-                                class='bx bx-log-out-circle'></i><span>Logout</span></a>
+                    <li>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class='bx bx-log-out-circle'></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

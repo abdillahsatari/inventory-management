@@ -42,18 +42,18 @@
                             <input type="text" name="inventory_price" class="form-control" id="validationCustom02" value="{{ $inventory["price"] }}" required>
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">Harga Tidak Boleh Kosong</div>
-                            @if ($errors->has('inventory_price'))
-                                <div class="text-danger">{{ $errors->first('inventory_price') }}</div>
-                            @endif
+                            @error('inventory_price')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                             <label for="validationCustom01" class="form-label">Point</label>
                             <input type="text" name="inventory_point" class="form-control" id="validationCustom03" value="{{ $inventory["point"] }}" required>
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">Point Tidak Boleh Kosong</div>
-                            @if ($errors->has('inventory_point'))
-                                <div class="text-danger">{{ $errors->first('inventory_point') }}</div>
-                            @endif
+                            @error('inventory_point')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                             <label for="validationCustom01" class="form-label">Stock</label>
