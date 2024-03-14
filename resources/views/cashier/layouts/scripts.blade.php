@@ -41,4 +41,4 @@
 <!--app JS-->
 <script src="{{ asset('assets/admin/js/app.js') }}"></script>
 <!--admin JS-->
-<script src="{{ asset('assets/admin/js/application_admin.js') }}"></script>
+<script src="{{ asset('assets/admin/js/application_cashier.js') }}"></script>

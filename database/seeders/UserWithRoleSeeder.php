@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserStatusType;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -41,6 +42,26 @@ class UserWithRoleSeeder extends Seeder
                 'password' => bcrypt('kasir2'),
                 'password_pin' => bcrypt('22222'),
                 'role_id' => 5,
+                'email_verified_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'Kasir 3',
+                'username' => 'kasir3',
+                'email' => 'kasir3@kasir.com',
+                'password' => bcrypt('kasir3'),
+                'password_pin' => bcrypt('33333'),
+                'role_id' => 5,
+                'status' => UserStatusType::INACTIVE(),
+                'email_verified_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'Kasir 4',
+                'username' => 'kasir4',
+                'email' => 'kasir4@kasir.com',
+                'password' => bcrypt('kasir4'),
+                'password_pin' => bcrypt('44444'),
+                'role_id' => 5,
+                'status' => UserStatusType::REMOVED(),
                 'email_verified_at' => date('Y-m-d H:i:s'),
             ]
         ];

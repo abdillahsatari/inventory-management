@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatusType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('password_pin')->unique();
             $table->unsignedBigInteger('role_id')->nullable();
+            $table->enum('status', [UserStatusType::ACTIVE(), UserStatusType::INACTIVE(), UserStatusType::REMOVED()])->default(UserStatusType::ACTIVE());
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -15,6 +15,7 @@
 <script src="{{ asset('assets/admin/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
 <script src="{{ asset('assets/admin/plugins/jquery-knob/excanvas.js') }}"></script>
 <script src="{{ asset('assets/admin/plugins/jquery-knob/jquery.knob.js') }}"></script>
+<script src="{{ asset('assets/admin/plugins/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/index.js') }}"></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -41,4 +42,4 @@
 <!--app JS-->
 <script src="{{ asset('assets/admin/js/app.js') }}"></script>
 <!--admin JS-->
-<script src="{{ asset('assets/admin/js/application_cashier.js') }}"></script>
+<script src="{{ asset('assets/admin/js/application_admin.js') }}"></script>

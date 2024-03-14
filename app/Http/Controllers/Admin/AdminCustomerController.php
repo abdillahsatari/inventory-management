@@ -49,7 +49,7 @@ class AdminCustomerController extends Controller
         $customer->address = $request->customer_address;
         $customer->save();
 
-        return redirect()->route('admin.customer.index');
+        return redirect()->route('admin.customer.index')->with("Pelanggan Berhasil ditambahkan");
     }
 
     /**

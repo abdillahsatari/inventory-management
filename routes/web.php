@@ -7,6 +7,7 @@
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminInventoryController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Cashier\DashboardController;
 use App\Http\Controllers\RedirectController;
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'role:1,2'], function () {
         Route::prefix('admin')->group(function () {
             Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.index');
+
             Route::controller(AdminInventoryController::class)->group(function() {
                 Route::get('/inventories', 'index')->name('admin.inventory.index');
                 Route::get('/inventory/{id}', 'show')->name('admin.inventory.show');
@@ -55,6 +57,7 @@ Route::group(['middleware' => 'auth'], function() {
                 Route::post('/inventory/{id}/update', 'update')->name('admin.inventory.update');
                 Route::get('/inventory/{id}/destroy', 'destroy')->name('admin.inventory.destroy');
             });
+
             Route::controller(AdminCustomerController::class)->group(function () {
                 Route::get('/customers', 'index')->name('admin.customer.index');
                 Route::get('/customer/{id}', 'show')->name('admin.customer.show');
@@ -64,6 +67,17 @@ Route::group(['middleware' => 'auth'], function() {
                 Route::post('/customer/{id}/update', 'update')->name('admin.customer.update');
                 Route::get('/customer/{id}/destroy', 'destroy')->name('admin.customer.destroy');
             });
+
+            Route::controller(AdminUserController::class)->group(function () {
+                Route::get('/users', 'index')->name('admin.user.index');
+                Route::get('/user/create', 'create')->name('admin.user.create');
+                Route::get('/user/{user}', 'show')->name('admin.user.show');
+                Route::post('/user/store', 'store')->name('admin.user.store');
+                Route::get('/user/{user}/edit', 'edit')->name('admin.user.edit');
+                Route::post('/user/{user}/update', 'update')->name('admin.user.update');
+                Route::get('/user/{user}/destroy', 'destroy')->name('admin.user.destroy');
+            });
+
             // later on
             Route::prefix('ajax')->group(function () {
                 // Route::get('/products', 'Admin\AdminProductController@getProducts')->name('admin.ajax.getProducts');
