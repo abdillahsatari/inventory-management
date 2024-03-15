@@ -340,15 +340,13 @@
                         <div class="dropdown-divider mb-0"></div>
                     </li>
                     <li>
-                        <form action="/logout" method="post">
+                        <form action="{{ Auth::guard("cashier")->check() ? route("cashier.logout") : "/logout" }}" method="post">
                             @csrf
                             <button type="submit" class="dropdown-item">
                                 <i class='bx bx-log-out-circle'></i>
                                 <span>Logout</span>
                             </button>
                         </form>
-                        {{-- <a class="dropdown-item" href="javascript:;"><i
-                                class='bx bx-log-out-circle'></i><span>Logout</span></a> --}}
                     </li>
                 </ul>
             </div>

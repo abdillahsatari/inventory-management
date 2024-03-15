@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class UserRoleCheck
+class CashierAuthenticate
 {
     /**
      * Handle an incoming request.
@@ -14,12 +14,12 @@ class UserRoleCheck
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next)
     {
-        if (in_array(auth()->user()->role_id, $roles)) {
-            return $next($request);
+        if (!auth()->guard('cashier')->check()) {
+            return redirect()->guest(route('cashier.login'));
         }
 
-        return redirect('/redirect');
+        return $next($request);
     }
 }

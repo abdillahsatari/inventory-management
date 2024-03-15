@@ -46,8 +46,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-      // inverse one to Many ke tabel role
-      public function role() {
+    public function role() {
         return $this->belongsTo(Role::class, 'role_id');
     }
 }

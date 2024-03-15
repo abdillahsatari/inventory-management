@@ -80,10 +80,15 @@ Route::group(['middleware' => 'auth'], function() {
 
         });
     });
+});
 
-    Route::group(['middleware' => 'role:5'], function () {
-        Route::prefix('kasir')->group(function () {
-            Route::get('/', [DashboardController::class, 'index'])->name('cashier.index');
-        });
+Route::group(['prefix' => 'cashier', 'namespace' => 'Cashier'], function () {
+
+    Route::get('/login', [AuthController::class, 'cashierLoginForm'])->name('cashier.login');
+    Route::post('/login', [AuthController::class, 'cashierLogin'])->name('cashier.login');
+
+    Route::group(['middleware' => 'cashier'], function(){
+        Route::get('/', [DashboardController::class, 'index'])->name('cashier.index');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('cashier.logout');
     });
 });
