@@ -1,4 +1,4 @@
-@extends('cashier.layouts.app')
+@extends('admin.adminLayouts.app')
 
 @section('title')
     <title>Kasir Toko</title>

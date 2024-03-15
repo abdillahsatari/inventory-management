@@ -1,9 +1,5 @@
 <?php
 
-// use App\Http\Controllers\Admin\AdminCustomerController;
-// use App\Http\Controllers\Admin\AdminDashboardController;
-// use App\Http\Controllers\Admin\AdminInventoryController;
-// use App\Http\Controllers\Cashier\DashboardController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminInventoryController;
@@ -11,13 +7,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Cashier\DashboardController;
 use App\Http\Controllers\RedirectController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
 
 
 // use Illuminate\Support\Facades\Route;

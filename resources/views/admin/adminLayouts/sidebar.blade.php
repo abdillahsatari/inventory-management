@@ -27,20 +27,33 @@
                 <div class="menu-title">Inventory</div>
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.customer.index') }}">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Pelanggan</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.user.index') }}">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Pengguna</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Report Penjualan</div>
+            </a>
+        </li>
         @elsecanany('isCashier')
         <li>
             <a href="{{ route('cashier.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Dashboard</div>
-            </a>
-        </li>
-        @endcan
-        <li>
-            <a href="{{ route('admin.customer.index') }}">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Pelanggan</div>
             </a>
         </li>
         <li>
@@ -50,22 +63,7 @@
                 <div class="menu-title">Transaksi</div>
             </a>
         </li>
-        @canany(['isSuperadmin', 'isAdmin'])
-        <li>
-            <a href="{{ route('admin.user.index') }}">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Pengguna</div>
-            </a>
-        </li>
-        @endcanany()
-        <li>
-            <a href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Report Penjualan</div>
-            </a>
-        </li>
+        @endcan
     </ul>
     <!--end navigation-->
 </div>
