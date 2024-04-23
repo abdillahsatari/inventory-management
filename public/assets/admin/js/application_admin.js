@@ -36,24 +36,6 @@ $(document).ready(function() {
 			});
 		}
 
-		// $(".modal-select").select2({
-		// 	theme: "bootstrap4",
-		// 	width: $(this).data("width") ? $(this).data("width") : $(this).hasClass("w-100") ? "100%" : "style",
-		// 	placeholder: $(this).data("placeholder"),
-		// 	allowClear: Boolean($(this).data("allow-clear")),
-		// 	dropdownParent: $("#exampleModal"),
-		// });
-
-		/**
-		/ CKEditor
-		 **/
-		if ($('#js-ckeditor').length > 0) {
-			var _fileBrowser = $('#js-ckeditor').data("kcfinder");
-			CKEDITOR.replace('js-ckeditor',{
-				filebrowserImageBrowseUrl : _fileBrowser,
-				height: '400px'});
-		}
-
 	})(jQuery);
 
 });
@@ -272,7 +254,6 @@ $(document).ready(function() {
 		});
 
 		$form.find('.js-form_action_btn').on('click', function (event) {
-			// event.preventDefault();
 			var _this = $(this);
 
 			var _imageUpload = $form.find('.js-image_upload');
@@ -352,42 +333,6 @@ $(document).ready(function() {
 		_createProductModals.modalClose();
 	}
 
-	// deprecaed
-	var _editProductModal = $('#editProductModals');
-	if (_editProductModal.length > 0) {
-		_editProductModal.on('shown.bs.modal', function (e) {
-			var _this     = $(this);
-			var _dataId   = $(e.relatedTarget).data('id');
-			var _dataUrl  = $(e.relatedTarget).data('url');
-			var _dataPostUrl  = $(e.relatedTarget).data('post-url');
-			var _formEditProduct= _this.find('.js-form_product_edit');
-
-			_this.find('input[name="productId"]').val(_dataId);
-      _formEditProduct.attr("action", _dataPostUrl);
-
-			$.ajax({
-				type: "GET",
-				url: _dataUrl,
-        contentType: false,
-        processData: false,
-			}).done(function(result) {
-
-        if(result.success){
-          _this.find('input[name="product_name"]').val(result.data.name);
-          _this.find('input[name="product_price"]').val(result.data.price);
-          _this.find('input[name="product_point"]').val(result.data.point);
-        }
-
-			}).fail(function (error, abc, dfg) {
-				console.log("error msg : ", error);
-			});
-
-			validateForm(_formEditProduct);
-		});
-
-		_editProductModal.modalClose();
-	}
-
   /**
 	 *
 	 * Admin Customer Page
@@ -402,46 +347,6 @@ $(document).ready(function() {
 		_createCustomerModals.modalClose();
 	}
 
-  // deprecaed
-	var _editProductModal = $('#editProductModal');
-	if (_editProductModal.length > 0) {
-		_editProductModal.on('shown.bs.modal', function (e) {
-			var _this						= $(this);
-			var _dataUrl 				= _this.data('url');
-			var _dataProductId  = $(e.relatedTarget).data('id');
-			var _formEditProduct= _this.find('.js-form_edit_product');
-			var formData  = new FormData();
-			formData.set('dataProductId', _dataProductId);
-			formData.set('_token', _formEditProduct._getCsrfToken());
-
-			_this.find('input[name="productId"]').val(_dataProductId);
-
-			$.ajax({
-				url: _dataUrl,
-				data: formData,
-				type: "post",
-				processData: false,
-				contentType: false
-			}).done(function(result) {
-				var obj = $.parseJSON(result);
-
-				if (obj.status == 'success') {
-					_this.find('input[name="product_name"]').val(obj.data["name"]);
-					_this.find('input[name="product_price"]').val(obj.data["price"]);
-					_this.find('input[name="product_point"]').val(obj.data["point"]);
-				}
-
-				_formEditProduct._getCsrfToken(obj.csrf_token);
-
-			}).fail(function (error, abc, efg) {
-				console.log("error msg : ", error);
-			});
-
-			validateForm(_formEditProduct);
-		});
-
-		_editProductModal.modalClose();
-	}
 
 	/**
 	 *
@@ -684,9 +589,6 @@ $(document).ready(function() {
 						processData: false,
 						contentType: false
 					}).done(function(result){
-
-						console.log("result ajax: ", result.data);
-
 						// store transaction details
 						$('.js_transaction_table_body > tr').each(function(){
 							let _this = $(this);
