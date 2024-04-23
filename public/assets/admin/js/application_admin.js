@@ -3,6 +3,7 @@
 =================================================================*/
 $(document).ready(function() {
 	(function ($) {
+
 		$(".knob").knob();
 
 		/**
@@ -52,6 +53,7 @@ $(document).ready(function() {
 				filebrowserImageBrowseUrl : _fileBrowser,
 				height: '400px'});
 		}
+
 	})(jQuery);
 
 });
@@ -66,6 +68,39 @@ $(document).ready(function() {
 	/*================================================================
 						Public Function
 	=================================================================*/
+
+	/**
+	 *
+	 * Convert int value into string value
+	 *
+	 * @param {int} _value
+	 * @param {boolean} _isInputType
+	 * @returns string
+	 */
+	function currencyFormatter(_value, _isInputType){
+		let _toDecimal	= Number(_value).toFixed(0);
+		let returnValue = _toDecimal.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		return  returnValue;
+	}
+
+	/**
+	 * Convert string value into int value
+	 *
+	 * @param {string} _value
+	 * @returns int
+	 */
+	function currencyParser(_value){
+		return Number(_value.replace(/[^0-9-]+/g,""))
+	}
+
+	/**
+	 *
+	 * @param {string} _value
+	 * @returns string
+	 */
+	function uppercaseSentences(_value){
+		return _value.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+	}
 
 	$.fn._getCsrfToken = function(_newToken) {
 
@@ -93,7 +128,6 @@ $(document).ready(function() {
 			var dataValue	= _this.data("price");
 			var decimal		= Number(dataValue).toFixed(0);
 			var returnValue = decimal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			// _this.append("<span>Rp. </span>"+returnValue);
 			_this.val(returnValue);
 		}
 	});
@@ -162,13 +196,10 @@ $(document).ready(function() {
 					processData: false,
 					contentType: false
 				}).done(function(result) {
-					// console.log("image upload ke :", _url);
 					var obj = $.parseJSON(result);
 
 					if (obj.status == 'success') {
 						_this.siblings('input').val(obj.data);
-						// console.log("nama file nya :", obj.data);
-						// console.log(obj.fileType);
 					} else {
 						// console.log("tidak terupload karena  :", obj.data);
 						// console.log(obj.fileType);
@@ -321,6 +352,7 @@ $(document).ready(function() {
 		_createProductModals.modalClose();
 	}
 
+	// deprecaed
 	var _editProductModal = $('#editProductModals');
 	if (_editProductModal.length > 0) {
 		_editProductModal.on('shown.bs.modal', function (e) {
@@ -364,15 +396,13 @@ $(document).ready(function() {
 	var _createCustomerModals = $('#createCustomerModals');
 	if (_createCustomerModals.length > 0){
 		_createCustomerModals.on('shown.bs.modal', function (e) {
-
-      console.log("hello world");
 			validateForm(_createCustomerModals.find('.js-form_customer_create'));
 		});
 
 		_createCustomerModals.modalClose();
 	}
 
-  // later on
+  // deprecaed
 	var _editProductModal = $('#editProductModal');
 	if (_editProductModal.length > 0) {
 		_editProductModal.on('shown.bs.modal', function (e) {
@@ -403,7 +433,7 @@ $(document).ready(function() {
 
 				_formEditProduct._getCsrfToken(obj.csrf_token);
 
-			}).fail(function (error, abc, dfg) {
+			}).fail(function (error, abc, efg) {
 				console.log("error msg : ", error);
 			});
 
@@ -411,6 +441,354 @@ $(document).ready(function() {
 		});
 
 		_editProductModal.modalClose();
+	}
+
+	/**
+	 *
+	 * Cashier Transaction Page
+	 *
+	 **/
+	let _inventorySearch = $('#js_inventory_search');
+	if (_inventorySearch.length > 0){
+
+		let _dataUrl = _inventorySearch.data("url");
+		let _transactionCartList = $('.js_transaction_table_body');
+
+		_inventorySearch.select2({
+			theme: 'bootstrap4',
+			minimumInputLength: 3,
+			allowClear: true,
+			placeholder: 'Masukkan Nama Item',
+			ajax: {
+				dataType: 'json',
+				url: _dataUrl,
+				delay: 280,
+				data: (params) => {
+					let query = {
+							search: params.term,
+							page: params.page || 1,
+					};
+					return query;
+				},
+				processResults: function (data, page) {
+					return {
+						results: data.data.data.map((inventory) => {
+								return { text: inventory.name, id: inventory.id };
+						}),
+						pagination: {
+								more: data.current_page < data.last_page,
+						},
+				};
+			 	},
+		 	}
+		}).on('select2:select', function (evt) {
+
+			let _url = "search/inventory/"+$(this).val();
+
+			$.ajax({
+				type: "GET",
+				url: _url,
+				contentType: 'json',
+			}).done(function(result) {
+				if(result.success){
+					let _item = result.data;
+					let _netto = _item.price;
+
+					if (_item.discount > 0) _netto = _netto - ((_item.discount/100) * _item.price);
+
+					let _subtotal = Number(_netto).toFixed(0);
+					let selectedItem = _transactionCartList.find('#item'+_item.id);
+
+					if(selectedItem.length > 0) {
+						let itemQuantity = selectedItem.find('.js_item_quantity');
+						itemQuantity.val( function(i, val) {return ++val});
+						updateQuantity(itemQuantity);
+					} else {
+						// rendered item
+						$('.js_transaction_table_body').append(`
+							<tr id="item`+_item.id+`" data-id="`+_item.id+`" data-point="`+_item.point+`">
+								<td class="js_item_name">`+ _item.name +`</td>
+								<td class="js_item_price">`+ currencyFormatter(_item.price, false) +`</td>
+								<td class="js_item_discount">`+ _item.discount +`%</td>
+								<td class="js_item_netto">`+ currencyFormatter(_netto, false) +`</td>
+								<td><input type="number" name="quantity" value="1" class="form-control js_item_quantity"></td>
+								<td class="js_item_subtotal">`+ currencyFormatter(_subtotal, false) +`</td>
+								<td>
+									<button class="btn btn-small btn-danger"><i class="bx bx-no-entry me-0 js_cart_list_delete" data-price="`+_subtotal+`"></i></button>
+								</td>
+							</tr>
+						`);
+
+						updateTransactionPoint(_item.point);
+
+					}
+
+					updateTotalPrice();
+
+					// update quanity
+					$(".js_item_quantity").off().on("change", function(){
+						updateQuantity($(this));
+					});
+
+					// remove listed cart's item
+					$(".js_cart_list_delete").off().on('click', function (e) {
+						deleteSelectedItem($(this));
+					});
+
+				} else {
+					// something
+				}
+			}).fail(function (errorMsg, status, result) {
+			})
+		});
+	}
+
+	// process transaction
+	let _processTransaction = $('#js_process_transaction');
+	if(_processTransaction.length > 0){
+
+		function updateTotalPrice(){
+			let _grandTotal = 0;
+			let _itemSubtotals = $('.js_transaction_table').find('.js_item_subtotal');
+
+			_itemSubtotals.each(function(){
+				let _subtotal = $(this).html();
+				_grandTotal += currencyParser(_subtotal);
+			});
+
+			$('#js_process_transaction').find('input[name="total_price"]').val(currencyFormatter(_grandTotal, true));
+		}
+
+		/**
+		 *
+		 * @param {int} _point
+		 */
+		function updateTransactionPoint(_point){
+			let _currentTransactionPoint = $('.js_transaction_point');
+			_currentTransactionPoint.val( function(i, val) {
+				let updatedPoint = currencyParser(val) + _point;
+				return updatedPoint;
+			});
+		}
+
+		/**
+		 *
+		 * @param {object} _dom
+		 */
+		function updateQuantity(_dom){
+			let _itemNetto = _dom.closest("tr").find('.js_item_netto').html();
+			let _netto = currencyParser(_itemNetto);
+			_updatedSubtotal = _dom.val() * _netto;
+			_dom.closest("tr").find('.js_item_subtotal').html(currencyFormatter(_updatedSubtotal, false));
+			updateTotalPrice();
+		}
+
+		/**
+		 *
+		 * @param {object} _dom
+		 */
+		function deleteSelectedItem(_dom){
+			let _itemSubtotal = Number(_dom.data("price")).toFixed(0);
+			let _quantity = Number(_dom.closest("tr").find('input[name="quantity"]').val());
+			let _substractAmount = Number(_quantity*_itemSubtotal);
+
+			_totalPrice = Number($('input[name="total_price"]').val().replace(".", ""));
+			_dom.closest('tr').remove();
+
+			updateTotalPrice(_totalPrice - _substractAmount);
+		}
+
+		$('.js_proceed_payment').on('click', function(){
+
+			let _totalPrice = currencyParser(_processTransaction.find('input[name="total_price"]').val());
+			let _totalPayment = currencyParser(_processTransaction.find('input[name="total_payment"]').val());
+			let _totalChange = _processTransaction.find('input[name="total_change"]');
+
+			if(!_totalPayment){
+				Lobibox.notify('error', {
+					pauseDelayOnHover: true,
+					continueDelayOnInactiveTab: false,
+					position: 'center top',
+					icon: 'bx bx-x-circle',
+					size: 'mini',
+					msg: 'Nominal Pembayaran Belum di Input'
+				});
+
+				return;
+			}
+
+			if(!_totalPrice){
+				Lobibox.notify('error', {
+					pauseDelayOnHover: true,
+					continueDelayOnInactiveTab: false,
+					position: 'center top',
+					icon: 'bx bx-x-circle',
+					size: 'mini',
+					msg: 'Keranjang Masih Kosong'
+				});
+
+				return;
+			}
+
+			let paymentChange = _totalPayment - _totalPrice;
+
+			if(paymentChange < 0){
+				Lobibox.notify('error', {
+					pauseDelayOnHover: true,
+					continueDelayOnInactiveTab: false,
+					position: 'center top',
+					icon: 'bx bx-x-circle',
+					size: 'mini',
+					msg: 'Nominal Pembayaran Tidak Cukup'
+				});
+				return;
+			} else {
+				_totalChange.val(currencyFormatter(paymentChange, false));
+				let _customerInfo = $('input[name="customer_id"]').val();
+
+				if(!_customerInfo){
+					Lobibox.notify('error', {
+						pauseDelayOnHover: true,
+						continueDelayOnInactiveTab: false,
+						position: 'center top',
+						icon: 'bx bx-x-circle',
+						size: 'mini',
+						msg: 'Informasi Pembeli Belum ditambahkan'
+					});
+					return;
+				}
+
+				let _transactionStoreBtn = $('.js_store_transaction_button');
+				let _dataUrlTransaction = _transactionStoreBtn.data("url-transaction");
+				let _dataUrlTransactionDetails = _transactionStoreBtn.data("url-transaction-detail");
+				_transactionStoreBtn.removeAttr('disabled');
+
+				$('.js_store_transaction_button').on("click", function(){
+					// store transaction
+					let _transactionTotalPoint = currencyParser($('.js_transaction_point').val());
+					let _transactionTotalAmount = currencyParser($('input[name="total_price"]').val());
+					let _transactionPayment = currencyParser($('input[name="total_payment"]').val());
+					let _transactionChange = currencyParser($('input[name="total_change"]').val());
+					let formDataTransaction = new FormData();
+
+					formDataTransaction.set("customer_id", _customerInfo);
+					formDataTransaction.set("total_point_earn", _transactionTotalPoint);
+					formDataTransaction.set("total_price", _transactionTotalAmount);
+					formDataTransaction.set("total_payment", _transactionPayment);
+					formDataTransaction.set("total_change", _transactionChange);
+
+					$.ajax({
+						url: _dataUrlTransaction,
+						data: formDataTransaction,
+						type: "post",
+						processData: false,
+						contentType: false
+					}).done(function(result){
+
+						console.log("result ajax: ", result.data);
+
+						// store transaction details
+						$('.js_transaction_table_body > tr').each(function(){
+							let _this = $(this);
+							let _itemId = _this.data("id");
+							let _itemPoint = _this.data("point");
+							let _itemName = _this.find('.js_item_name').html();
+							let _itemDiscount = currencyParser(_this.find('.js_item_discount').html());
+							let _itemPrice = currencyParser(_this.find('.js_item_netto').html());
+							let _itemQuantity = currencyParser(_this.find('input[name="quantity"]').val());
+							let _itemTotalPrice = currencyParser(_this.find('.js_item_subtotal').html());
+
+							let formDataTransactionDetails = new FormData();
+
+							formDataTransactionDetails.set("transaction_id", result.data);
+							formDataTransactionDetails.set("inventory_id", _itemId);
+							formDataTransactionDetails.set("inventory_name", _itemName);
+							formDataTransactionDetails.set("inventory_price", _itemPrice);
+							formDataTransactionDetails.set("inventory_discount", _itemDiscount);
+							formDataTransactionDetails.set("inventory_total_price", _itemTotalPrice);
+							formDataTransactionDetails.set("quantity", _itemQuantity);
+							formDataTransactionDetails.set("inventory_point", _itemPoint);
+
+							$.ajax({
+								url: _dataUrlTransactionDetails,
+								data: formDataTransactionDetails,
+								type: "post",
+								processData: false,
+								contentType: false
+							}).done(function(result){
+							}).fail(function(){
+								// do something if transaction detail failed to store data
+							})
+						}).promise().done(function () {
+							location.reload()
+						});
+
+					}).fail(function(error, abc, efg){
+						// do something if transaction failed to store data
+					});
+				});
+			}
+		});
+
+	}
+
+	// customer search
+	let _customerSearch = $('#js_customer_search');
+	if(_customerSearch.length > 0){
+		let _dataUrl = _customerSearch.data("url");
+
+		_customerSearch.select2({
+			theme: 'bootstrap4',
+			minimumInputLength: 3,
+			allowClear: true,
+			placeholder: 'Masukkan Nama Pelanggan',
+			ajax: {
+				dataType: 'json',
+				url: _dataUrl,
+				delay: 280,
+				data: (params) => {
+					let query = {
+							search: params.term,
+							page: params.page || 1,
+					};
+					return query;
+				},
+				processResults: function (data, page) {
+					return {
+						results: data.data.data.map((customer) => {
+								let _displayText = uppercaseSentences(customer.name) + " " + customer.phone_number;
+								return { text: _displayText, id: customer.id, customer: data.data.data };
+						}),
+						pagination: {
+								more: data.current_page < data.last_page,
+						},
+				};
+			 	},
+		 	}
+		}).on('select2:select', function(e){
+			let selectedCustomer = e.params.data.customer[0];
+			let customerName = uppercaseSentences(selectedCustomer.name);
+			let customerPhone = selectedCustomer.phone_number;
+			let customerId = selectedCustomer.id;
+			let customerInfo = customerName + " " + customerPhone;
+
+			$('input[name="customer_id"]').val(customerId);
+			$('.js_transaction_customer').val(customerInfo);
+			// add customer current point here
+
+		});
+	}
+
+	// remove all listed cart items
+	let _resetTransactionTable = $('.js_reset_transaction_table');
+	if(_resetTransactionTable.length > 0){
+		_resetTransactionTable.on("click", function(){
+			$('.js_transaction_table_body').html("");
+			$('input[name="total_price"]').val('0');
+			$('input[name="total_payment"]').val('');
+			$('input[name="total_change"]').val('');
+			$('.js_transaction_point').val('0');
+		})
 	}
 
 })(jQuery);

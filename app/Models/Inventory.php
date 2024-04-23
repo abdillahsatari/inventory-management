@@ -18,6 +18,12 @@ class Inventory extends Model
         'name',
         'price',
         'point',
-        'stock'
+        'stock',
+        'discount'
     ];
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }

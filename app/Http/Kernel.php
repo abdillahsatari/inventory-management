@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\OnlyAjax;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cashier' => \App\Http\Middleware\CashierAuthenticate::class,
         'role' => \App\Http\Middleware\UserRoleCheck::class,
+        'only.ajax' => \App\Http\Middleware\OnlyAjax::class,
     ];
 }

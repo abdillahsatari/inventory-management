@@ -57,7 +57,7 @@
             </a>
         </li>
         <li>
-            <a href="javascript:;">
+            <a href="{{ route('cashier.transaction.index') }}">
                 <div class="parent-icon"><i class='bx bx-home-circle'></i>
                 </div>
                 <div class="menu-title">Transaksi</div>

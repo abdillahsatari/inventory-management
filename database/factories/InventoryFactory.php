@@ -20,7 +20,8 @@ class InventoryFactory extends Factory
             "name" => fake()->name(),
             "price" => fake()->numberBetween($min=10000, $max=50000),
             "point" => fake()->numberBetween($min=10, $max=50),
-            "stock" => fake()->numberBetween($min=50, $max=250)
+            "stock" => fake()->numberBetween($min=50, $max=250),
+            "discount" => fake()->numberBetween($min=0, $max=25),
         ];
     }
 }

@@ -10,6 +10,7 @@
     <link rel="icon" href="{{ asset('assets/admin/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
     {{-- <link href="{{ asset('assets/admin/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" /> --}}
+    <link href="{{ asset('assets/admin/plugins/notifications/css/lobibox.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
@@ -25,6 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/application_admin.css') }}" rel="stylesheet">
 
     @yield('title')
 </head>

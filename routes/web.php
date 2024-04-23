@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminInventoryController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Cashier\DashboardController;
+use App\Http\Controllers\Cashier\TransactionAjaxController;
+use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,12 +72,7 @@ Route::group(['middleware' => 'auth'], function() {
 
             // later on
             Route::prefix('ajax')->group(function () {
-                // Route::get('/products', 'Admin\AdminProductController@getProducts')->name('admin.ajax.getProducts');
-                // Route::get('/product/{id}/edit', 'Admin\AdminProductController@editProduct')->name('admin.ajax.editProducts');
-                // Route::get('/product/{id}/edit', [AdminProductController::class, 'editProduct'])->name('admin.ajax.product.edit');
-
                 // another ajax route here
-
             }); //add middleware only.ajax here
 
         });
@@ -88,7 +85,18 @@ Route::group(['prefix' => 'cashier', 'namespace' => 'Cashier'], function () {
     Route::post('/login', [AuthController::class, 'cashierLogin'])->name('cashier.login');
 
     Route::group(['middleware' => 'cashier'], function(){
-        Route::get('/', [DashboardController::class, 'index'])->name('cashier.index');
+
         Route::post('/logout', [AuthController::class, 'logout'])->name('cashier.logout');
+
+        Route::get('/', [DashboardController::class, 'index'])->name('cashier.index');
+        Route::get('/transaction', [TransactionController::class, 'index'])->name('cashier.transaction.index');
+    });
+
+    Route::group(['middleware' => 'only.ajax'], function () {
+        Route::get('/search/inventories', [TransactionAjaxController::class, 'inventories'])->name('cashier.inventories.search');
+        Route::get('/search/inventory/{inventory}', [TransactionAjaxController::class, 'inventory'])->name('cashier.inventory.search.details');
+        Route::get('/search/customers', [TransactionAjaxController::class, 'customers'])->name('cashier.customers.search');
+        Route::post('/transaction/store', [TransactionAjaxController::class, 'transactionStore'])->name('cashier.transaction.store');
+        Route::post('/transaction/details/store', [TransactionAjaxController::class, 'transactionDetailsStore'])->name('cashier.transaction.detail.store');
     });
 });
